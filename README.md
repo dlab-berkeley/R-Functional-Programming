@@ -1,5 +1,4 @@
 # automating-workflows-in-R
-Automating workflows in R
 
 ## How to Automate Your Workflow in R
 
