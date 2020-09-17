@@ -13,13 +13,5 @@ This workshop helps you to step up your R skills with functional programming. Th
 ## Prerequisites
 
 ## Setup 
-1. Write code 
-2. Write functions for repeated parts 
-3. Automate iterations using `purrr`
-4. Extensions
-    1. Using multiple arguments 
-    2. Making functions slower or faster 
-    3. Catching errors 
-    4. Adding conditional statements 
     
 ![](https://i.creativecommons.org/l/by/4.0/88x31.png) This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
