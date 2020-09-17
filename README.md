@@ -6,7 +6,7 @@ File an [issue](https://github.com/dlab-berkeley/automating-workflows-in-R/issue
 
 ## Overview
 
-This workshop helps you to step up your R skills with functional programming. The `purrr` package provides easy-to-use tools to automate repeated things in your R workflow. The end result is cleaner, faster, more readable and extendable code. I highly recommend you to take this workshop (1) if you still write copy-and-paste code, (2) exclusively rely on for loops for automation, and (3) want to know more about the joy and power of R functional programming.
+This workshop helps you to step up your R skills with functional programming. The `purrr` package provides easy-to-use tools to automate repeated things in your R workflow. The end result is cleaner, faster, more readable and extendable code. I highly recommend you to take this workshop (1) if you still write copy-and-paste code, (2) exclusively rely on for loops for automation, and (3) want to know about the joy and power of R functional programming.
 
 ## Learning objectives 
 
