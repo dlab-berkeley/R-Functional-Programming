@@ -13,7 +13,7 @@
 
 <meta name="date" content="2020-09-18" />
 
-<title>Make Your Function Slower or Faster</title>
+<title>Make Automation Slower or Faster</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -2794,7 +2794,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Make Your Function Slower or Faster</h1>
+<h1 class="title toc-ignore">Make Automation Slower or Faster</h1>
 <h4 class="author">Jae Yeon Kim</h4>
 <h4 class="date">2020-09-18</h4>
 
@@ -2810,198 +2810,27 @@ if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)</code></p
                tictoc, # performance test 
                furrr) # parallel processing </code></pre>
 </div>
-<div id="how-to-make-automation-slower" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> How to Make Automation Slower</h1>
+<div id="objectives" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Objectives</h1>
+<ul>
+<li>Learning how to make your automation process slower or faster</li>
+</ul>
+</div>
+<div id="how-to-make-automation-slower" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> How to Make Automation Slower</h1>
 <ul>
 <li>Scraping 50 pages from a website and you don’t want to overload the server. How can you do that?</li>
 </ul>
 </div>
-<div id="for-loop" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> For loop</h1>
-<pre class="r"><code>for(i in 1:50){
-  
-  message(&quot;Scraping page &quot;,i)
-  
-  if((i %% 10) == 0){
-    
-    message(&quot;Break time&quot;)
-    
-    Sys.sleep(1) # 1 second 
-  }
-  
-}</code></pre>
-<pre><code>## Scraping page 1</code></pre>
-<pre><code>## Scraping page 2</code></pre>
-<pre><code>## Scraping page 3</code></pre>
-<pre><code>## Scraping page 4</code></pre>
-<pre><code>## Scraping page 5</code></pre>
-<pre><code>## Scraping page 6</code></pre>
-<pre><code>## Scraping page 7</code></pre>
-<pre><code>## Scraping page 8</code></pre>
-<pre><code>## Scraping page 9</code></pre>
-<pre><code>## Scraping page 10</code></pre>
-<pre><code>## Break time</code></pre>
-<pre><code>## Scraping page 11</code></pre>
-<pre><code>## Scraping page 12</code></pre>
-<pre><code>## Scraping page 13</code></pre>
-<pre><code>## Scraping page 14</code></pre>
-<pre><code>## Scraping page 15</code></pre>
-<pre><code>## Scraping page 16</code></pre>
-<pre><code>## Scraping page 17</code></pre>
-<pre><code>## Scraping page 18</code></pre>
-<pre><code>## Scraping page 19</code></pre>
-<pre><code>## Scraping page 20</code></pre>
-<pre><code>## Break time</code></pre>
-<pre><code>## Scraping page 21</code></pre>
-<pre><code>## Scraping page 22</code></pre>
-<pre><code>## Scraping page 23</code></pre>
-<pre><code>## Scraping page 24</code></pre>
-<pre><code>## Scraping page 25</code></pre>
-<pre><code>## Scraping page 26</code></pre>
-<pre><code>## Scraping page 27</code></pre>
-<pre><code>## Scraping page 28</code></pre>
-<pre><code>## Scraping page 29</code></pre>
-<pre><code>## Scraping page 30</code></pre>
-<pre><code>## Break time</code></pre>
-<pre><code>## Scraping page 31</code></pre>
-<pre><code>## Scraping page 32</code></pre>
-<pre><code>## Scraping page 33</code></pre>
-<pre><code>## Scraping page 34</code></pre>
-<pre><code>## Scraping page 35</code></pre>
-<pre><code>## Scraping page 36</code></pre>
-<pre><code>## Scraping page 37</code></pre>
-<pre><code>## Scraping page 38</code></pre>
-<pre><code>## Scraping page 39</code></pre>
-<pre><code>## Scraping page 40</code></pre>
-<pre><code>## Break time</code></pre>
-<pre><code>## Scraping page 41</code></pre>
-<pre><code>## Scraping page 42</code></pre>
-<pre><code>## Scraping page 43</code></pre>
-<pre><code>## Scraping page 44</code></pre>
-<pre><code>## Scraping page 45</code></pre>
-<pre><code>## Scraping page 46</code></pre>
-<pre><code>## Scraping page 47</code></pre>
-<pre><code>## Scraping page 48</code></pre>
-<pre><code>## Scraping page 49</code></pre>
-<pre><code>## Scraping page 50</code></pre>
-<pre><code>## Break time</code></pre>
+<div id="for-loop" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> For loop</h1>
 </div>
-<div id="map" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Map</h1>
+<div id="map" class="section level1" number="5">
+<h1 number="5"><span class="header-section-number">5</span> Map</h1>
 <ul>
-<li><code>walk()</code> works same as <code>map()</code> but doesn’t store its output.</li>
-</ul>
-<pre class="r"><code>walk(1:50, function(x){message(&quot;Scraping page&quot;, x)})</code></pre>
-<pre><code>## Scraping page1</code></pre>
-<pre><code>## Scraping page2</code></pre>
-<pre><code>## Scraping page3</code></pre>
-<pre><code>## Scraping page4</code></pre>
-<pre><code>## Scraping page5</code></pre>
-<pre><code>## Scraping page6</code></pre>
-<pre><code>## Scraping page7</code></pre>
-<pre><code>## Scraping page8</code></pre>
-<pre><code>## Scraping page9</code></pre>
-<pre><code>## Scraping page10</code></pre>
-<pre><code>## Scraping page11</code></pre>
-<pre><code>## Scraping page12</code></pre>
-<pre><code>## Scraping page13</code></pre>
-<pre><code>## Scraping page14</code></pre>
-<pre><code>## Scraping page15</code></pre>
-<pre><code>## Scraping page16</code></pre>
-<pre><code>## Scraping page17</code></pre>
-<pre><code>## Scraping page18</code></pre>
-<pre><code>## Scraping page19</code></pre>
-<pre><code>## Scraping page20</code></pre>
-<pre><code>## Scraping page21</code></pre>
-<pre><code>## Scraping page22</code></pre>
-<pre><code>## Scraping page23</code></pre>
-<pre><code>## Scraping page24</code></pre>
-<pre><code>## Scraping page25</code></pre>
-<pre><code>## Scraping page26</code></pre>
-<pre><code>## Scraping page27</code></pre>
-<pre><code>## Scraping page28</code></pre>
-<pre><code>## Scraping page29</code></pre>
-<pre><code>## Scraping page30</code></pre>
-<pre><code>## Scraping page31</code></pre>
-<pre><code>## Scraping page32</code></pre>
-<pre><code>## Scraping page33</code></pre>
-<pre><code>## Scraping page34</code></pre>
-<pre><code>## Scraping page35</code></pre>
-<pre><code>## Scraping page36</code></pre>
-<pre><code>## Scraping page37</code></pre>
-<pre><code>## Scraping page38</code></pre>
-<pre><code>## Scraping page39</code></pre>
-<pre><code>## Scraping page40</code></pre>
-<pre><code>## Scraping page41</code></pre>
-<pre><code>## Scraping page42</code></pre>
-<pre><code>## Scraping page43</code></pre>
-<pre><code>## Scraping page44</code></pre>
-<pre><code>## Scraping page45</code></pre>
-<pre><code>## Scraping page46</code></pre>
-<pre><code>## Scraping page47</code></pre>
-<pre><code>## Scraping page48</code></pre>
-<pre><code>## Scraping page49</code></pre>
-<pre><code>## Scraping page50</code></pre>
-<ul>
-<li>If you’re web scraping, one problem with this approach is it’s too fast by human standards.</li>
-</ul>
-<pre class="r"><code># 0.03 sec elapsed 
-tic()
-walk(1:50, function(x){message(&quot;Scraping page&quot;, x)}) # Anonymous function; I don&#39;t name the function </code></pre>
-<pre><code>## Scraping page1</code></pre>
-<pre><code>## Scraping page2</code></pre>
-<pre><code>## Scraping page3</code></pre>
-<pre><code>## Scraping page4</code></pre>
-<pre><code>## Scraping page5</code></pre>
-<pre><code>## Scraping page6</code></pre>
-<pre><code>## Scraping page7</code></pre>
-<pre><code>## Scraping page8</code></pre>
-<pre><code>## Scraping page9</code></pre>
-<pre><code>## Scraping page10</code></pre>
-<pre><code>## Scraping page11</code></pre>
-<pre><code>## Scraping page12</code></pre>
-<pre><code>## Scraping page13</code></pre>
-<pre><code>## Scraping page14</code></pre>
-<pre><code>## Scraping page15</code></pre>
-<pre><code>## Scraping page16</code></pre>
-<pre><code>## Scraping page17</code></pre>
-<pre><code>## Scraping page18</code></pre>
-<pre><code>## Scraping page19</code></pre>
-<pre><code>## Scraping page20</code></pre>
-<pre><code>## Scraping page21</code></pre>
-<pre><code>## Scraping page22</code></pre>
-<pre><code>## Scraping page23</code></pre>
-<pre><code>## Scraping page24</code></pre>
-<pre><code>## Scraping page25</code></pre>
-<pre><code>## Scraping page26</code></pre>
-<pre><code>## Scraping page27</code></pre>
-<pre><code>## Scraping page28</code></pre>
-<pre><code>## Scraping page29</code></pre>
-<pre><code>## Scraping page30</code></pre>
-<pre><code>## Scraping page31</code></pre>
-<pre><code>## Scraping page32</code></pre>
-<pre><code>## Scraping page33</code></pre>
-<pre><code>## Scraping page34</code></pre>
-<pre><code>## Scraping page35</code></pre>
-<pre><code>## Scraping page36</code></pre>
-<pre><code>## Scraping page37</code></pre>
-<pre><code>## Scraping page38</code></pre>
-<pre><code>## Scraping page39</code></pre>
-<pre><code>## Scraping page40</code></pre>
-<pre><code>## Scraping page41</code></pre>
-<pre><code>## Scraping page42</code></pre>
-<pre><code>## Scraping page43</code></pre>
-<pre><code>## Scraping page44</code></pre>
-<pre><code>## Scraping page45</code></pre>
-<pre><code>## Scraping page46</code></pre>
-<pre><code>## Scraping page47</code></pre>
-<pre><code>## Scraping page48</code></pre>
-<pre><code>## Scraping page49</code></pre>
-<pre><code>## Scraping page50</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.011 sec elapsed</code></pre>
-<ul>
-<li>If you want to make the function run slowly …</li>
+<li><p><code>walk()</code> works same as <code>map()</code> but doesn’t store its output.</p></li>
+<li><p>If you’re web scraping, one problem with this approach is it’s too fast by human standards.</p></li>
+<li><p>If you want to make the function run slowly …</p></li>
 </ul>
 <blockquote>
 <p>slowly() takes a function and modifies it to wait a given amount of time between each call. - <code>purrr</code> package vignette</p>
@@ -3009,68 +2838,9 @@ walk(1:50, function(x){message(&quot;Scraping page&quot;, x)}) # Anonymous funct
 <ul>
 <li>If a function is a verb, then a helper function is an adverb (modifying the behavior of the verb).</li>
 </ul>
-<pre class="r"><code># 49.05 sec elapsed
-
-
-tic()
-
-walk(1:50, slowly(function(x){message(&quot;Scraping page&quot;, x)},   
-                    rate = rate_delay(pause = 1))) # pause = Delay between attempts in seconds</code></pre>
-<pre><code>## Scraping page1</code></pre>
-<pre><code>## Scraping page2</code></pre>
-<pre><code>## Scraping page3</code></pre>
-<pre><code>## Scraping page4</code></pre>
-<pre><code>## Scraping page5</code></pre>
-<pre><code>## Scraping page6</code></pre>
-<pre><code>## Scraping page7</code></pre>
-<pre><code>## Scraping page8</code></pre>
-<pre><code>## Scraping page9</code></pre>
-<pre><code>## Scraping page10</code></pre>
-<pre><code>## Scraping page11</code></pre>
-<pre><code>## Scraping page12</code></pre>
-<pre><code>## Scraping page13</code></pre>
-<pre><code>## Scraping page14</code></pre>
-<pre><code>## Scraping page15</code></pre>
-<pre><code>## Scraping page16</code></pre>
-<pre><code>## Scraping page17</code></pre>
-<pre><code>## Scraping page18</code></pre>
-<pre><code>## Scraping page19</code></pre>
-<pre><code>## Scraping page20</code></pre>
-<pre><code>## Scraping page21</code></pre>
-<pre><code>## Scraping page22</code></pre>
-<pre><code>## Scraping page23</code></pre>
-<pre><code>## Scraping page24</code></pre>
-<pre><code>## Scraping page25</code></pre>
-<pre><code>## Scraping page26</code></pre>
-<pre><code>## Scraping page27</code></pre>
-<pre><code>## Scraping page28</code></pre>
-<pre><code>## Scraping page29</code></pre>
-<pre><code>## Scraping page30</code></pre>
-<pre><code>## Scraping page31</code></pre>
-<pre><code>## Scraping page32</code></pre>
-<pre><code>## Scraping page33</code></pre>
-<pre><code>## Scraping page34</code></pre>
-<pre><code>## Scraping page35</code></pre>
-<pre><code>## Scraping page36</code></pre>
-<pre><code>## Scraping page37</code></pre>
-<pre><code>## Scraping page38</code></pre>
-<pre><code>## Scraping page39</code></pre>
-<pre><code>## Scraping page40</code></pre>
-<pre><code>## Scraping page41</code></pre>
-<pre><code>## Scraping page42</code></pre>
-<pre><code>## Scraping page43</code></pre>
-<pre><code>## Scraping page44</code></pre>
-<pre><code>## Scraping page45</code></pre>
-<pre><code>## Scraping page46</code></pre>
-<pre><code>## Scraping page47</code></pre>
-<pre><code>## Scraping page48</code></pre>
-<pre><code>## Scraping page49</code></pre>
-<pre><code>## Scraping page50</code></pre>
-<pre class="r"><code>toc()</code></pre>
-<pre><code>## 49.066 sec elapsed</code></pre>
 </div>
-<div id="how-to-make-automation-faster" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> How to Make Automation Faster</h1>
+<div id="how-to-make-automation-faster" class="section level1" number="6">
+<h1 number="6"><span class="header-section-number">6</span> How to Make Automation Faster</h1>
 <p>In a different situation, you want to make your function run faster. This is a common situation when you collect and analyze data at large-scale. You can solve this problem using parallel processing. For more on the parallel processing in R, read <a href="https://yxue-me.com/post/2019-05-12-a-glossary-of-parallel-computing-packages-in-r-2019/">this review</a>.</p>
 <ul>
 <li><p>Parallel processing setup</p>
@@ -3097,12 +2867,12 @@ n_cores # This number depends on your computer spec.</code></pre>
 tic()
 mean100 &lt;- map(1:1000000, mean)
 toc()</code></pre>
-<pre><code>## 4.75 sec elapsed</code></pre>
+<pre><code>## 5.694 sec elapsed</code></pre>
 <pre class="r"><code># 2.536 sec elapsed 
 tic()
 mean100 &lt;- future_map(1:1000000, mean)
 toc()</code></pre>
-<pre><code>## 3.071 sec elapsed</code></pre>
+<pre><code>## 3.542 sec elapsed</code></pre>
 </div>
 
 

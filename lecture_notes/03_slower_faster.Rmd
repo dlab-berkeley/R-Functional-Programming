@@ -1,5 +1,5 @@
 ---
-title: "Make Your Function Slower or Faster"
+title: "Make Automation Slower or Faster"
 subtitle: ""
 author: "Jae Yeon Kim"
 date: "`r Sys.Date()`"
@@ -22,6 +22,9 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
                tictoc, # performance test 
                furrr) # parallel processing 
 ```
+# Objectives 
+
+- Learning how to make your automation process slower or faster 
 
 # How to Make Automation Slower
 
@@ -29,7 +32,7 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 
 # For loop 
 
-```{r}
+```{r, include=FALSE}
 
 for(i in 1:50){
   
@@ -49,14 +52,14 @@ for(i in 1:50){
 
 - `walk()` works same as `map()` but doesn't store its output. 
 
-```{r}
+```{r,include=FALSE}
 
 walk(1:50, function(x){message("Scraping page", x)})
 
 ```
 - If you're web scraping, one problem with this approach is it's too fast by human standards.
 
-```{r}
+```{r,include=FALSE}
 
 # 0.03 sec elapsed 
 tic()
@@ -70,7 +73,7 @@ toc()
 
 - If a function is a verb, then a helper function is an adverb (modifying the behavior of the verb). 
 
-```{r}
+```{r,include=FALSE}
 
 # 49.05 sec elapsed
 
