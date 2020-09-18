@@ -1,0 +1,86 @@
+---
+title: "Make Your Function Slower or Faster"
+subtitle: ""
+author: "Jae Yeon Kim"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+# Setup 
+
+```{r}
+# Install packages 
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, # tidyverse pkgs including purrr
+               tictoc) # performance test 
+```
+
+# Problem 
+
+- Scraping 50 pages from a website and you don't want to overload the server. How can you do that?
+
+# For loop 
+
+```{r}
+
+for(i in 1:50){
+  
+  message("Scraping page ",i)
+  
+  if((i %% 10) == 0){
+    
+    message("Break time")
+    
+    Sys.sleep(1) # 1 second 
+  }
+  
+}
+
+```
+# Map 
+
+- `walk()` works same as `map()` but doesn't store its output. 
+
+```{r}
+
+walk(1:50, function(x){message("Scraping page", x)})
+
+```
+- If you're web scraping, one problem with this approach is it's too fast by human standards.
+
+```{r}
+
+# 0.03 sec elapsed 
+tic()
+walk(1:50, function(x){message("Scraping page", x)}) # Anonymous function; I don't name the function 
+toc()
+
+```
+
+- If you want to make it run slowly ... 
+
+> slowly() takes a function and modifies it to wait a given amount of time between each call. - `purrr` package vignette 
+
+- If a function is a verb, then a helper function is an adverb (modifying the behavior of the verb). 
+
+```{r}
+
+# 49.05 sec elapsed
+
+
+tic()
+
+walk(1:50, slowly(function(x){message("Scraping page", x)},   
+                    rate = rate_delay(pause = 1))) # pause = Delay between attempts in seconds
+
+toc()
+
+```
+
