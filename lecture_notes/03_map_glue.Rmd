@@ -25,7 +25,7 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 
 # Objective 
 
-- Learning how to use `glue()` to automate plotting
+- Learning how to use `map()` and `glue()` to automate plotting
 
 # Problem 
 
