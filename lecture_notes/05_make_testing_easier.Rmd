@@ -1,5 +1,5 @@
 ---
-title: "What if ..."
+title: "Make Testing Easier"
 subtitle: ""
 author: "Jae Yeon Kim"
 date: "`r Sys.Date()`"
@@ -19,5 +19,8 @@ output:
 # Install packages 
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc) # performance test 
+               tictoc # performance test 
 ```
+
+> It’s not that we don’t test our code, it’s that we don’t store our tests so they can be re-run automatically. - Hadley Wickam 
+

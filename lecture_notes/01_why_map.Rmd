@@ -1,5 +1,5 @@
 ---
-title: "Why Functional Programing?"
+title: "Why Functional Programming: No More Copying and Pasting"
 subtitle: ""
 author: "Jae Yeon Kim"
 date: "`r Sys.Date()`"
@@ -24,7 +24,7 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 
 # Objectives 
 
-- Learning why using functions and `purrr:map()` makes your code simpler, faster, and more extendable 
+- Learning how to use `purrr:map()` to make your automation cleaner, faster, and more extendable 
 
 # Copy-and-paste programming 
 

@@ -1,0 +1,115 @@
+---
+title: "Automate Plotting"
+subtitle: ""
+author: "Jae Yeon Kim"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+# Setup 
+
+```{r}
+# Install packages 
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, # tidyverse pkgs including purrr
+               tictoc, # performance test 
+               glue) # glue strings and objects 
+```
+
+# Objective 
+
+- Learning how to use `glue()` to automate plotting
+
+# Problem 
+
+- Making the following data visualization process more efficient. 
+
+```{r}
+
+data("airquality")
+
+airquality %>%
+    ggplot(aes(x = Ozone, y = Solar.R)) +
+    geom_point() +
+    labs(title = "Relationship between Ozone and Solar.R",
+         y = "Solar.R")
+
+airquality %>%
+    ggplot(aes(x = Ozone, y = Wind)) +
+    geom_point() +
+    labs(title = "Relationship between Ozone and Wind",
+         y = "Wind")
+
+airquality %>%
+    ggplot(aes(x = Ozone, y = Temp)) +
+    geom_point() +
+    labs(title = "Relationship between Ozone and Temp",
+         y = "Temp")
+
+```
+
+# Solution 
+
+- Learn how `glue()` works. 
+- `glue()` combines strings and objects and it works simpler and faster than `paste()` or `sprintif()`. 
+
+```{r}
+
+names <- c("Jae", "Aniket", "Avery")
+
+fields <- c("Political Science", "Law", "Public Health")
+
+glue("{names} studies {fields}.")
+
+```
+- So, our next step is to combine `glue()` and `map()`. 
+
+- Let's first think about writing a function that includes `glue()`.
+
+**Challenge 1**
+How can you create the character vector of column names? 
+
+**Challenge 2**
+How can make `ggplot2()` take strings as x and y variable names? (Hint: Type `?aes_string()`) 
+
+```{r}
+
+airquality %>%
+    ggplot(aes_string(x = names(airquality)[1], y = names(airquality)[2])) +
+    geom_point() +
+    labs(title = glue("Relationship between Ozone and {names(airquality)[2]}"),
+         y = glue("{names(airquality)[2]}"))
+
+```
+
+- The next step is to write an automatic plotting function. 
+
+    - Note that in the function i (abstract argument) replaced 2 (specific number). 
+
+```{r}
+
+create_point_plot <- function(i){
+  
+  airquality %>%
+    ggplot(aes_string(x = names(airquality)[1], y = names(airquality)[i])) +
+    geom_point() +
+    labs(title = glue("Relationship between Ozone and {names(airquality)[i]}"),
+         y = glue("{names(airquality)[i]}"))
+  
+  }
+```
+
+- The final step is to put the function in `map()`.
+
+```{r}
+
+map(2:ncol(airquality), create_point_plot)
+
+```

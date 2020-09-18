@@ -1,4 +1,4 @@
-# How to Write Cleaner, Faster, and More Reusable R Code
+# How to Automate Repeated Thigns in R
 
 by [Jae Yeon Kim](https://jaeyk.github.io/)
 
