@@ -1,0 +1,128 @@
+---
+title: "No More Nested Loops"
+subtitle: ""
+author: "Jae Yeon Kim"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+# Setup 
+
+```{r}
+# Install packages 
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, # tidyverse pkgs including purrr
+               tictoc) # performance test 
+```
+
+# Objectives 
+
+- Learning how to use `map2()` and `pmap()` to avoid writing a nested for loop.
+
+# Problem 
+
+- Problem: How can you create something like below?
+
+[1] "University =  Berkeley | Department =  waterbenders"
+
+[1] "University =  Berkeley | Department =  earthbenders"
+
+[1] "University =  Berkeley | Department =  firebenders"
+
+[1] "University =  Berkeley | Department =  airbenders"
+
+[1] "University =  Stanford | Department =  waterbenders"
+
+[1] "University =  Stanford | Department =  earthbenders"
+
+[1] "University =  Stanford | Department =  firebenders"
+
+[1] "University =  Stanford | Department =  airbenders"
+
+- The most manual way: You can copy and paste eight times.
+
+```{r}
+paste("University = Berkeley | Department = CS")
+```
+# For loop 
+
+- A slightly more efficient way: using a for loop. 
+
+- Think about which part of the statement is constant and which part varies ( = parameters).  
+    
+- Do we need a placeholder? No. We don't need a placeholder because we don't store the result of iterations.
+    
+**Challenge 1**: How many parameters do you need to solve the problem below?
+
+    - Fun fact: The department names are from [Avatar: The Last Airbender](https://en.wikipedia.org/wiki/Avatar:_The_Last_Airbender). 
+  
+```{r}
+
+# Outer loop 
+
+for (univ in c("Berkeley", "Stanford")) {
+
+  # Inner loop
+  for (dept in c("waterbenders", "earthbenders", "firebenders", "airbenders")) {
+
+    print(paste("University = ", univ, "|", "Department = ", dept))
+
+  }
+
+}
+
+```
+- This is not bad, but ... n arguments -> n nested for loops. As a scale of your problem grows, your code gets really complicated.
+
+> To become significantly more reliable, code must become more transparent. In particular, nested conditions and loops must be viewed with great suspicion. Complicated control flows confuse programmers. Messy code often hides bugs. — [Bjarne Stroustrup](https://en.wikipedia.org/wiki/Bjarne_Stroustrup)
+
+# map2 & pmap
+
+- Step 1: Define inputs and a function.
+
+**Challenge 2** Why are we using `rep()` to create input vectors? For instance, for `univ_list` why not just use `c("Berkeley", "Stanford")`?
+
+```{r}
+
+# Inputs (remember the length of these inputs should be identical)
+univ_list <- rep(c("Berkeley", "Stanford"),4)
+
+dept_list <- rep(c("waterbenders", "earthbenders", "firebenders", "airbenders"),2)
+
+# Function 
+print_lists <- function(univ, dept){
+  
+  print(paste("University = ", univ, "|", "Department = ", dept))
+  
+}
+
+# Test 
+print_lists(univ_list[1], dept_list[1])
+
+```
+- Step2: Using `map2()` or `pmap()`
+
+![](https://dcl-prog.stanford.edu/images/map2.png)
+```{r}
+
+# 2 arguments 
+map2_output <- map2(univ_list, dept_list, print_lists) 
+
+```
+
+![](https://d33wubrfki0l68.cloudfront.net/e426c5755e2e65bdcc073d387775db79791f32fd/92902/diagrams/functionals/pmap.png)
+
+```{r}
+# 3+ arguments 
+pmap_output <- pmap(list(univ_list, dept_list), print_lists) 
+
+```
+
+**Challenge 3** Have you noticed that we used a slightly different input for `pmap()` compared to `map()` or `map2()`? What is the difference?
