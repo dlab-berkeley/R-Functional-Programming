@@ -1,4 +1,4 @@
-# How to Automate Your Workflow in R
+# How to Write Cleaner, Faster, and More Reusable R Code
 
 by [Jae Yeon Kim](https://jaeyk.github.io/)
 
