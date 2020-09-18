@@ -1,0 +1,79 @@
+---
+title: "Automate Joining"
+subtitle: ""
+author: "Jae Yeon Kim"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+# Setup 
+
+```{r}
+# Install packages 
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, # tidyverse pkgs including purrr
+               tictoc) # performance test 
+```
+
+# Objective 
+
+- Learning how to use `reduce()` to automate joining multiple dataframes
+
+# Problem 
+
+- How can you make joining multiple dataframes more efficient?
+- Note that we will use `dplyr::left_join() = merge(x, y, all.x = TRUE)`.
+
+```{r}
+
+df1 <- tibble(x = sample(1:10, size = 3, replace = TRUE),
+       y = sample(1:10, size = 3, replace = TRUE),
+       z = sample(1:10, size = 3, replace = TRUE))
+
+df2 <- tibble(x = sample(1:10, size = 3, replace = TRUE),
+       y = sample(1:10, size = 3, replace = TRUE),
+       z = sample(1:10, size = 3, replace = TRUE))
+
+df3 <- tibble(x = sample(1:10, size = 3, replace = TRUE),
+       y = sample(1:10, size = 3, replace = TRUE),
+       z = sample(1:10, size = 3, replace = TRUE))
+
+```
+
+# Copy and paste
+
+```{r}
+
+first_join <- left_join(df1, df2)
+
+second_join <- left_join(first_join, df3)
+
+second_join
+```
+**Challenge**
+Why the above solution is not efficient?
+
+# reduce 
+
+![How reduce() works.](https://d33wubrfki0l68.cloudfront.net/9c239e1227c69b7a2c9c2df234c21f3e1c74dd57/eec0e/diagrams/functionals/reduce.png)
+
+    - Input: Takes a vector of length n
+  
+    - Computation: Calls a function with a pair of values at a time
+  
+    - Output: Returns a vector of length 1
+    
+```{r}
+
+reduced <- reduce(list(df1, df2, df3), left_join)
+
+reduced
+```
+
