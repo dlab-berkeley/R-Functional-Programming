@@ -1,4 +1,4 @@
-# How to Automate Repeated Thigns in R
+# How to Automate Repeated Things in R
 
 by [Jae Yeon Kim](https://jaeyk.github.io/)
 
