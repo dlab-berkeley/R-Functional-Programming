@@ -2813,7 +2813,7 @@ if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)</code></p
 <div id="objectives" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Objectives</h1>
 <ul>
-<li>Learning how to use <code>slowly()</code> and <code>future_</code> to make your automation process either slower or faster</li>
+<li>Learning how to use <code>slowly()</code> and <code>future_</code> to make automation process either slower or faster</li>
 </ul>
 </div>
 <div id="how-to-make-automation-slower" class="section level1" number="3">
@@ -2867,12 +2867,12 @@ n_cores # This number depends on your computer spec.</code></pre>
 tic()
 mean100 &lt;- map(1:1000000, mean)
 toc()</code></pre>
-<pre><code>## 4.374 sec elapsed</code></pre>
+<pre><code>## 4.869 sec elapsed</code></pre>
 <pre class="r"><code># 2.536 sec elapsed 
 tic()
 mean100 &lt;- future_map(1:1000000, mean)
 toc()</code></pre>
-<pre><code>## 3.132 sec elapsed</code></pre>
+<pre><code>## 3.487 sec elapsed</code></pre>
 </div>
 
 

@@ -25,7 +25,7 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 
 # Objectives 
 
-- Learning how to use `slowly()` and `future_` to make your automation process either slower or faster 
+- Learning how to use `slowly()` and `future_` to make automation process either slower or faster
 
 # How to Make Automation Slower
 

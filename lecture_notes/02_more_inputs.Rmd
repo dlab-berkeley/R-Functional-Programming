@@ -1,5 +1,5 @@
 ---
-title: "Automote More Than Two Tasks Simultaneously"
+title: "Automote 2 or 2+ Tasks"
 subtitle: ""
 author: "Jae Yeon Kim"
 date: "`r Sys.Date()`"
@@ -24,7 +24,7 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 
 # Objectives 
 
-- Learning how to use `map2()` and `pmap()` to avoid writing a nested for loop.
+- Learning how to use `map2()` and `pmap()` to avoid writing nested loops.
 
 # Problem 
 

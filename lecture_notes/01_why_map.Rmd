@@ -19,12 +19,13 @@ output:
 # Install packages 
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc) # performance test 
+               tictoc, # performance test 
+               broom) # tidy modeling
 ```
 
 # Objectives 
 
-- Learning how to use `purrr:map()` to make your automation cleaner, faster, and more extendable 
+- How to use `purrr` to automate workflow in a cleaner, faster, and more extendable way
 
 # Copy-and-paste programming 
 
@@ -179,10 +180,23 @@ lm_model <- function(df) {
   }
 
 # Map
-airquality %>%
+models <- airquality %>%
   group_by(Month) %>%
   nest() %>% # Create list-columns 
   mutate(ols = map(data, lm_model)) # Map 
 
+models$ols[1]
+
+# Add tidying 
+tidy_lm_model <- purrr::compose( # compose multiple functions 
+  broom::tidy, # convert lm objects into tidy tibbles 
+  lm_model)
+
+tidied_models <- airquality %>%
+  group_by(Month) %>%
+  nest() %>% # Create list-columns 
+  mutate(ols = map(data, tidy_lm_model)) 
+
+tidied_models$ols[1]
 ```
 

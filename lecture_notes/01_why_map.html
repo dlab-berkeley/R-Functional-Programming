@@ -2807,12 +2807,13 @@ div.tocify {
 if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)</code></pre>
 <pre><code>## Loading required package: pacman</code></pre>
 <pre class="r"><code>pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc) # performance test </code></pre>
+               tictoc, # performance test 
+               broom) # tidy modeling</code></pre>
 </div>
 <div id="objectives" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Objectives</h1>
 <ul>
-<li>Learning how to use <code>purrr:map()</code> to make your automation cleaner, faster, and more extendable</li>
+<li>How to use <code>purrr</code> to automate workflow in a cleaner, faster, and more extendable way</li>
 </ul>
 </div>
 <div id="copy-and-paste-programming" class="section level1" number="3">
@@ -2925,7 +2926,7 @@ for (i in seq_along(airquality)){ # Sequence variable
 }
 
 toc()</code></pre>
-<pre><code>## 0.008 sec elapsed</code></pre>
+<pre><code>## 0.007 sec elapsed</code></pre>
 <pre class="r"><code># 0.004 sec elapsed 
 
 tic()
@@ -2933,7 +2934,7 @@ tic()
 out1 &lt;- airquality %&gt;% map_dbl(mean, na.rm = TRUE)
 
 toc()</code></pre>
-<pre><code>## 0.002 sec elapsed</code></pre>
+<pre><code>## 0.003 sec elapsed</code></pre>
 <ul>
 <li><p>In short, <code>map()</code> is more readable, faster, and easily extensive with other data science tasks (e.g., wrangling, modeling, and visualization) using <code>%&gt;%</code>.</p></li>
 <li><p>Final point: Why not base R <code>apply</code> family?</p></li>
@@ -2955,15 +2956,37 @@ lm_model &lt;- function(df) {
   }
 
 # Map
-airquality %&gt;%
+models &lt;- airquality %&gt;%
   group_by(Month) %&gt;%
   nest() %&gt;% # Create list-columns 
-  mutate(ols = map(data, lm_model)) # Map </code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["Month"],"name":[1],"type":["int"],"align":["right"]},{"label":["data"],"name":[2],"type":["list"],"align":["right"]},{"label":["ols"],"name":[3],"type":["list"],"align":["right"]}],"data":[{"1":"5","2":"<tibble>","3":"<S3: lm>"},{"1":"6","2":"<tibble>","3":"<S3: lm>"},{"1":"7","2":"<tibble>","3":"<S3: lm>"},{"1":"8","2":"<tibble>","3":"<S3: lm>"},{"1":"9","2":"<tibble>","3":"<S3: lm>"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+  mutate(ols = map(data, lm_model)) # Map 
+
+models$ols[1]</code></pre>
+<pre><code>## [[1]]
+## 
+## Call:
+## lm(formula = Temp ~ Ozone, data = df)
+## 
+## Coefficients:
+## (Intercept)        Ozone  
+##     62.8842       0.1629</code></pre>
+<pre class="r"><code># Add tidying 
+tidy_lm_model &lt;- purrr::compose( # compose multiple functions 
+  broom::tidy, # convert lm objects into tidy tibbles 
+  lm_model)
+
+tidied_models &lt;- airquality %&gt;%
+  group_by(Month) %&gt;%
+  nest() %&gt;% # Create list-columns 
+  mutate(ols = map(data, tidy_lm_model)) 
+
+tidied_models$ols[1]</code></pre>
+<pre><code>## [[1]]
+## # A tibble: 2 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   62.9      1.61       39.2  2.88e-23
+## 2 Ozone          0.163    0.0500      3.26 3.31e- 3</code></pre>
 </div>
 
 
