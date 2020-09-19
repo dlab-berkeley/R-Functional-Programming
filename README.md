@@ -24,6 +24,10 @@ This workshop helps you to step up your R skills with functional programming. Th
 
 ## Prerequisites
 
+- Some experience with writing functions in R 
+
 ## Setup
+
+Launch the ... . Please do so before attending the worskshop as it takes a while (especially, if you do it for the first time).
 
 ![](https://i.creativecommons.org/l/by/4.0/88x31.png) This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
