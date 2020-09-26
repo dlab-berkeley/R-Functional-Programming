@@ -28,7 +28,7 @@ This workshop helps you to step up your R skills with functional programming. Th
 
 ## Setup
 
-Launch the [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dlab-berkeley/R-functional-programming/master?urlpath=rstudio). Please do so before attending the worskshop as it takes a while (especially, if you do it for the first time).
+Launch the [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dlab-berkeley/R-functional-programming/master?urlpath=rstudio). Please do so before attending the worskshop as it would take a while (especially, if you do it for the first time).
 
 ---
 
