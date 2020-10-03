@@ -1,0 +1,152 @@
+---
+title: "Automate Simulations"
+subtitle: ""
+author: "Jae Yeon Kim"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+    number_sections: yes
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+# Setup 
+
+```{r}
+# Install packages
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(
+  tidyverse, # tidyverse pkgs including purrr
+  tictoc, # performance test
+  gapminder # toy data 
+) 
+```
+
+# Objective 
+
+- Learning how to use `rerun()` to automate running multiple simulations
+
+Simulations are a great way [to check statistical assumptions and learn how statistical models work](http://people.duke.edu/~ccc14/sta-663-2016/15B_ResamplingAndSimulation.html). 
+
+# Problem 
+
+- Can you run the following regression model 1,000 times and plot the predicted values ($\hat{y}$) and their confidence intervals? 
+
+```{r}
+
+data("gapminder")
+
+# Build a regression model
+model <- lm(lifeExp ~ log(gdpPercap), data = gapminder)
+
+# Predict y-values
+gapminder$pred <- predict(model, type = "response", gapminder)
+
+# Predict confidence intervals
+ilink <- family(model)$linkinv # Extracting the inverse link from parameter objects
+
+# Combine prediction outputs
+combined <- predict(model, gapminder, se.fit = TRUE)[1:2] %>% as_tibble() %>%
+    mutate(
+      upr = ilink(fit + (2 * se.fit)),
+      lwr = ilink(fit - (2 * se.fit))
+    ) %>%
+    bind_cols(gapminder)
+
+combined %>%
+  ggplot(aes(x = log(gdpPercap), y = lifeExp)) +
+  geom_point(alpha = 0.2) +
+  geom_line(aes(y = pred), size = 1, col = "blue") +
+  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.4) +
+  scale_y_continuous(breaks = scales::pretty_breaks())
+
+```
+
+# Solution 
+
+## Write a function 
+
+```{r}
+
+predict_lm <- function(input) {
+
+  # Build a regression model
+  model <- lm(lifeExp ~ log(gdpPercap), data = input)
+
+  # Predict y-values
+  input$pred <- predict(model, type = "response", input)
+
+  # Predict confidence intervals
+  ilink <- family(model)$linkinv # Extracting the inverse link from parameter objects
+
+  # Combine prediction outputs
+  output <- predict(model, input, se.fit = TRUE)[1:2] %>%
+    as_tibble() %>%
+    mutate(
+      upr = ilink(fit + (2 * se.fit)),
+      lwr = ilink(fit - (2 * se.fit))
+    ) %>%
+    bind_cols(input)
+
+  output 
+}
+
+# Unit testing  
+testthat::expect_equal(sum(colnames(predict_lm(gapminder)) %in% c("fit", "se.fit")), 2)
+
+```
+
+## for loop 
+
+```{r}
+
+fit <- rep(NA, nrow(gapminder))
+se.fit <- rep(NA, nrow(gapminder))
+
+for (i in 1:1000){
+  
+    # Build a regression model
+  model <- lm(lifeExp ~ log(gdpPercap), data = gapminder)
+
+  # Predict y-values and SEs 
+  fit[i] <- predict(model, gapminder, se.fit = TRUE)[1]
+  se.fit[i] <- predict(model, gapminder, se.fit = TRUE)[2] 
+  
+}
+
+fit
+```
+
+## rerun
+
+### Write a function 
+
+```{r}
+
+predict_lm <- function(input) {
+
+  # Build a regression model
+  model <- lm(lifeExp ~ log(gdpPercap), data = input)
+
+  # Predict y-values
+  input$pred <- predict(model, type = "response", input)
+
+  # Predict confidence intervals
+  ilink <- family(model)$linkinv # Extracting the inverse link from parameter objects
+
+  # Combine prediction outputs
+  output <- predict(model, input, se.fit = TRUE)[1:2] %>%
+    as_tibble() %>%
+    mutate(
+      upr = ilink(fit + (2 * se.fit)),
+      lwr = ilink(fit - (2 * se.fit))
+    ) %>%
+    bind_cols(input)
+
+  output 
+}
+
+```
