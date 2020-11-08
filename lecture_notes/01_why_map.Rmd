@@ -20,7 +20,8 @@ output:
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, # tidyverse pkgs including purrr
                tictoc, # performance test 
-               broom) # tidy modeling
+               broom, # tidy modeling
+               patchwork) # arranging ggplots 
 ```
 
 # Objectives 
@@ -139,7 +140,7 @@ tic()
 
 out1 <- vector("double", ncol(airquality)) # Placeholder 
 
-for (i in seq_along(airquality)){ # Sequence variable 
+for (i in seq_along(airquality)) { # Sequence variable 
   
   out1[[i]] <- mean(airquality[[i]], na.rm = TRUE) # Assign a computation result to each element 
   
@@ -164,39 +165,105 @@ Short answer: `purrr::map()` is simpler to write. For instance,
 
 `map_dbl(x, mean, na.rm = TRUE)` = `vapply(x, mean, na.rm = TRUE, FUN.VALUE = double(1))`
 
-# Application (many models)
+**Additional tips**
+
+Performance testing (profiling) is an important part of programming. `tictic()` measures the time that needs to take to run a target function for once. If you want a more robust measure of timing as well as information on memory (**speed** and **space** both matter for performance testing), consider using the [`bench` package](https://github.com/r-lib/bench) that is designed for high precising timing of R expressions. 
+
+
+```{r}
+map_mark <- bench::mark(
+
+  out1 <- airquality %>% map_dbl(mean, na.rm = TRUE)
+
+  )
+
+map_mark
+```
+
+# Applications 
+
+1. Many models
 
 - One popular application of `map()` is to run regression models (or whatever model you want to run) on list-columns. No more copying and pasting for running many regression models on subgroups!
 
-- For more about this technique, read the Many Models subchapter of the [R for Data Science](https://r4ds.had.co.nz/many-models.html#creating-list-columns).
+```{r eval = FALSE}
+# Have you ever tried this?
+lm_A <- lm(y ~ x, subset(data, subgroup == "group_A"))
+lm_B <- lm(y ~ x, subset(data, subgroup == "group_B"))
+lm_C <- lm(y ~ x, subset(data, subgroup == "group_C"))
+lm_D <- lm(y ~ x, subset(data, subgroup == "group_D"))
+lm_E <- lm(y ~ x, subset(data, subgroup == "group_E"))
+```
+
+- For more information on this technique, read the Many Models subchapter of the [R for Data Science](https://r4ds.had.co.nz/many-models.html#creating-list-columns).
 
 ```{r}
-
 # Function
 lm_model <- function(df) {
-  
   lm(Temp ~ Ozone, data = df)
-
-  }
+}
 
 # Map
 models <- airquality %>%
   group_by(Month) %>%
-  nest() %>% # Create list-columns 
-  mutate(ols = map(data, lm_model)) # Map 
-
+  nest() %>% # Create list-columns
+  mutate(ols = map(data, lm_model)) # Map
 models$ols[1]
 
-# Add tidying 
-tidy_lm_model <- purrr::compose( # compose multiple functions 
-  broom::tidy, # convert lm objects into tidy tibbles 
-  lm_model)
+# Add tidying
+tidy_lm_model <- purrr::compose( # compose multiple functions
+  broom::tidy, # convert lm objects into tidy tibbles
+  lm_model
+)
 
 tidied_models <- airquality %>%
   group_by(Month) %>%
-  nest() %>% # Create list-columns 
-  mutate(ols = map(data, tidy_lm_model)) 
+  nest() %>% # Create list-columns
+  mutate(ols = map(data, tidy_lm_model))
 
 tidied_models$ols[1]
+```
+
+2. Simulations 
+
+A good friend of `map()` function is `rerun()` function. This comibination is really useful for simulations. Consider the following example. 
+
+* Base R approach 
+
+```{r}
+
+set.seed(1234)
+
+small_n <- 100 ; k <- 1000 ; mu <- 500 ; sigma <- 20
+
+y_list <- rep(list(NA), k)
+
+for (i in seq(k)) {
+        
+    y_list[[i]] <- rnorm(small_n, mu, sigma)
+        
+}
+
+y_means <- unlist(lapply(y_list, mean))
+
+qplot(y_means) +
+   geom_vline(xintercept = 500, linetype = "dotted", color = "red")
+```
+
+* rerun() + map()
+
+```{r}
+
+small_n <- 100 ; k <- 1000
+
+y_tidy <- rerun(k, rnorm(small_n, mu, sigma)) 
+
+y_means_tidy <- map_dbl(y_tidy, mean)
+
+# Visualize 
+(qplot(y_means) +
+   geom_vline(xintercept = 500, linetype = "dotted", color = "red")) +
+(qplot(y_means_tidy) +
+   geom_vline(xintercept = 500, linetype = "dotted", color = "red"))
 ```
 
