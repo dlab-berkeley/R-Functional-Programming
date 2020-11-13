@@ -32,9 +32,13 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 - Making the following data visualization process more efficient. 
 
 ```{r}
-
 data("airquality")
 
+airquality
+```
+
+
+```{r}
 airquality %>%
     ggplot(aes(x = Ozone, y = Solar.R)) +
     geom_point() +
@@ -52,13 +56,12 @@ airquality %>%
     geom_point() +
     labs(title = "Relationship between Ozone and Temp",
          y = "Temp")
-
 ```
 
 # Solution 
 
 - Learn how `glue()` works. 
-- `glue()` combines strings and objects and it works simpler and faster than `paste()` or `sprintif()`. 
+- `glue()` combines strings and objects and it works simpler and faster than `paste()` or `sprintif()`.
 
 ```{r}
 
@@ -66,9 +69,11 @@ names <- c("Jae", "Aniket", "Avery")
 
 fields <- c("Political Science", "Law", "Public Health")
 
+library(glue)
 glue("{names} studies {fields}.")
 
 ```
+
 - So, our next step is to combine `glue()` and `map()`. 
 
 - Let's first think about writing a function that includes `glue()`.
@@ -103,7 +108,8 @@ create_point_plot <- function(i){
     labs(title = glue("Relationship between Ozone and {names(airquality)[i]}"),
          y = glue("{names(airquality)[i]}"))
   
-  }
+}
+
 ```
 
 - The final step is to put the function in `map()`.

@@ -35,11 +35,11 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 
 ```{r, include=FALSE}
 
-for(i in 1:50){
+for (i in 1:50) {
   
   message("Scraping page ",i)
   
-  if((i %% 10) == 0){
+  if ((i %% 10) == 0) {
     
     message("Break time")
     
@@ -49,6 +49,7 @@ for(i in 1:50){
 }
 
 ```
+
 # Map 
 
 - `walk()` works same as `map()` but doesn't store its output. 
@@ -58,9 +59,10 @@ for(i in 1:50){
 walk(1:50, function(x){message("Scraping page", x)})
 
 ```
+
 - If you're web scraping, one problem with this approach is it's too fast by human standards.
 
-```{r,include=FALSE}
+```{r}
 
 # 0.03 sec elapsed 
 tic()
@@ -68,6 +70,7 @@ walk(1:50, function(x){message("Scraping page", x)}) # Anonymous function; I don
 toc()
 
 ```
+
 - If you want to make the function run slowly ... 
 
 > slowly() takes a function and modifies it to wait a given amount of time between each call. - `purrr` package vignette 
@@ -87,6 +90,7 @@ walk(1:50, slowly(function(x){message("Scraping page", x)},
 toc()
 
 ```
+
 # How to Make Automation Faster 
 
 In a different situation, you want to make your function run faster. This is a common situation when you collect and analyze data at large-scale. You can solve this problem using parallel processing. For more on the parallel processing in R, read [this review](https://yxue-me.com/post/2019-05-12-a-glossary-of-parallel-computing-packages-in-r-2019/).
@@ -108,12 +112,12 @@ plan(multiprocess, # multicore, if supported, otherwise multisession
 
 # 4.931 sec elapsed 
 tic()
-mean100 <- map(1:1000000, mean)
+mean100 <- map(1:100000, mean)
 toc()
 
 # 2.536 sec elapsed 
 tic()
-mean100 <- future_map(1:1000000, mean)
+mean100 <- future_map(1:100000, mean)
 toc()
 
 ```

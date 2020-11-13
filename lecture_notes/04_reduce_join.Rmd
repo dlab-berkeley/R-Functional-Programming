@@ -1,5 +1,5 @@
 ---
-title: "Automate Joining"
+title: "Automate Binding"
 subtitle: ""
 author: "Jae Yeon Kim"
 date: "`r Sys.Date()`"
@@ -24,12 +24,11 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 
 # Objective 
 
-- Learning how to use `reduce()` to automate joining multiple dataframes
+- Learning how to use `reduce()` to automate row-binding multiple dataframes
 
 # Problem 
 
-- How can you make joining multiple dataframes more efficient?
-- Note that we will use `dplyr::left_join() = merge(x, y, all.x = TRUE)`.
+- How can you make row-binding multiple dataframes more efficient?
 
 ```{r}
 
@@ -46,17 +45,16 @@ df3 <- tibble(x = sample(1:10, size = 3, replace = TRUE),
        z = sample(1:10, size = 3, replace = TRUE))
 
 ```
-
 # Copy and paste
 
 ```{r}
 
-first_join <- left_join(df1, df2)
+first_bind <- bind_rows(df1, df2)
 
-second_join <- left_join(first_join, df3)
+second_bind <- bind_rows(first_bind, df3)
 
-second_join
 ```
+
 **Challenge**
 Why the above solution is not efficient?
 
@@ -72,8 +70,8 @@ Why the above solution is not efficient?
     
 ```{r}
 
-reduced <- reduce(list(df1, df2, df3), left_join)
+reduced <- reduce(list(df1, df2, df3), bind_rows)
 
-reduced
 ```
+
 

@@ -51,12 +51,12 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 ```{r}
 paste("University = Berkeley | Department = CS")
 ```
+
 # For loop 
 
 - A slightly more efficient way: using a for loop. 
 
 - Think about which part of the statement is constant and which part varies ( = parameters).  
-    
 - Do we need a placeholder? No. We don't need a placeholder because we don't store the result of iterations.
     
 **Challenge 1**: How many parameters do you need to solve the problem below?
@@ -65,11 +65,11 @@ paste("University = Berkeley | Department = CS")
   
 ```{r}
 
-# Outer loop 
+# Outer loop for univ variable 
 
 for (univ in c("Berkeley", "Stanford")) {
 
-  # Inner loop
+  # Inner loop for dept variable 
   for (dept in c("waterbenders", "earthbenders", "firebenders", "airbenders")) {
 
     print(paste("University = ", univ, "|", "Department = ", dept))
@@ -79,6 +79,7 @@ for (univ in c("Berkeley", "Stanford")) {
 }
 
 ```
+
 - This is not bad, but ... n arguments -> n nested for loops. As a scale of your problem grows, your code gets really complicated.
 
 > To become significantly more reliable, code must become more transparent. In particular, nested conditions and loops must be viewed with great suspicion. Complicated control flows confuse programmers. Messy code often hides bugs. — [Bjarne Stroustrup](https://en.wikipedia.org/wiki/Bjarne_Stroustrup)
@@ -90,30 +91,37 @@ for (univ in c("Berkeley", "Stanford")) {
 **Challenge 2** Why are we using `rep()` to create input vectors? For instance, for `univ_list` why not just use `c("Berkeley", "Stanford")`?
 
 ```{r}
-
 # Inputs (remember the length of these inputs should be identical)
 univ_list <- rep(c("Berkeley", "Stanford"),4)
 
 dept_list <- rep(c("waterbenders", "earthbenders", "firebenders", "airbenders"),2)
+```
 
+
+```{r}
 # Function 
 print_lists <- function(univ, dept){
   
   print(paste("University = ", univ, "|", "Department = ", dept))
   
 }
+```
 
+
+```{r}
 # Test 
 print_lists(univ_list[1], dept_list[1])
 
 ```
+
 - Step2: Using `map2()` or `pmap()`
 
 ![](https://dcl-prog.stanford.edu/images/map2.png)
 ```{r}
 
 # 2 arguments 
-map2_output <- map2(univ_list, dept_list, print_lists) 
+map2_output <- map2(univ_list, dept_list,
+                    print_lists) 
 
 ```
 

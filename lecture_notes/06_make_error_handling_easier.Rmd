@@ -33,6 +33,8 @@ pacman::p_load(tidyverse, # tidyverse pkgs including purrr
 
 - Explain why we can't run `map(url_lists, read_html)`
 
+
+
 ```{r}
 
 url_lists <- c("https://en.wikipedia.org/wiki/University_of_California,_Berkeley",
@@ -40,9 +42,11 @@ url_lists <- c("https://en.wikipedia.org/wiki/University_of_California,_Berkeley
 "https://en.wikipedia.org/wiki/Carnegie_Mellon_University",
 "https://DLAB" 
 )
+
 ```
 
 ```{r, eval=FALSE}
+
 map(url_lists, read_html)
 
 ```
@@ -74,6 +78,7 @@ tryCatch(
 })
 
 ```
+
 - Here's `purrr` version of the `try-catch` mechanism (evaluates code and assigns exception handlers). 
 
 ## safely and possibly 
@@ -84,7 +89,9 @@ tryCatch(
 - error: `NULL` or `error` 
 
 ```{r}
-map(url_lists, safely(read_html)) 
+
+test <- map(url_lists, safely(read_html)) 
+
 ```
 
 - The easier way to solve this problem is just avoiding the error.
@@ -96,6 +103,7 @@ map(url_lists, safely(read_html)) %>%
   purrr::compact() # Remove empty elements 
 
 ```
+
 ## possibly 
 
 What if the best way to solve the problem is not ignoring the error ... 
@@ -109,6 +117,8 @@ out <- map(url_lists,
              otherwise = "The URL is broken.")
     
     ) 
+
+out
 
 # Let's find the broken URL.
 url_lists[out[seq(out)] == "The URL is broken."]

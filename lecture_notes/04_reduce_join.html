@@ -11,9 +11,9 @@
 
 <meta name="author" content="Jae Yeon Kim" />
 
-<meta name="date" content="2020-09-18" />
+<meta name="date" content="2020-11-13" />
 
-<title>Automate Joining</title>
+<title>Automate Binding</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -2567,6 +2567,54 @@ window.onload = function() {
   PagedTableDoc.initAll();
 };
 </script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -2794,9 +2842,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Automate Joining</h1>
+<h1 class="title toc-ignore">Automate Binding</h1>
 <h4 class="author">Jae Yeon Kim</h4>
-<h4 class="date">2020-09-18</h4>
+<h4 class="date">2020-11-13</h4>
 
 </div>
 
@@ -2812,14 +2860,13 @@ if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)</code></p
 <div id="objective" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Objective</h1>
 <ul>
-<li>Learning how to use <code>reduce()</code> to automate joining multiple dataframes</li>
+<li>Learning how to use <code>reduce()</code> to automate row-binding multiple dataframes</li>
 </ul>
 </div>
 <div id="problem" class="section level1" number="3">
 <h1 number="3"><span class="header-section-number">3</span> Problem</h1>
 <ul>
-<li>How can you make joining multiple dataframes more efficient?</li>
-<li>Note that we will use <code>dplyr::left_join() = merge(x, y, all.x = TRUE)</code>.</li>
+<li>How can you make row-binding multiple dataframes more efficient?</li>
 </ul>
 <pre class="r"><code>df1 &lt;- tibble(x = sample(1:10, size = 3, replace = TRUE),
        y = sample(1:10, size = 3, replace = TRUE),
@@ -2835,16 +2882,9 @@ df3 &lt;- tibble(x = sample(1:10, size = 3, replace = TRUE),
 </div>
 <div id="copy-and-paste" class="section level1" number="4">
 <h1 number="4"><span class="header-section-number">4</span> Copy and paste</h1>
-<pre class="r"><code>first_join &lt;- left_join(df1, df2)</code></pre>
-<pre><code>## Joining, by = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)</code></pre>
-<pre class="r"><code>second_join &lt;- left_join(first_join, df3)</code></pre>
-<pre><code>## Joining, by = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)</code></pre>
-<pre class="r"><code>second_join</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["x"],"name":[1],"type":["int"],"align":["right"]},{"label":["y"],"name":[2],"type":["int"],"align":["right"]},{"label":["z"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"10","2":"3","3":"4"},{"1":"1","2":"7","3":"9"},{"1":"6","2":"4","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<pre class="r"><code>first_bind &lt;- bind_rows(df1, df2)
+
+second_bind &lt;- bind_rows(first_bind, df3)</code></pre>
 <p><strong>Challenge</strong> Why the above solution is not efficient?</p>
 </div>
 <div id="reduce" class="section level1" number="5">
@@ -2858,15 +2898,7 @@ df3 &lt;- tibble(x = sample(1:10, size = 3, replace = TRUE),
 - Computation: Calls a function with a pair of values at a time
 
 - Output: Returns a vector of length 1</code></pre>
-<pre class="r"><code>reduced &lt;- reduce(list(df1, df2, df3), left_join)</code></pre>
-<pre><code>## Joining, by = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)
-## Joining, by = c(&quot;x&quot;, &quot;y&quot;, &quot;z&quot;)</code></pre>
-<pre class="r"><code>reduced</code></pre>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["x"],"name":[1],"type":["int"],"align":["right"]},{"label":["y"],"name":[2],"type":["int"],"align":["right"]},{"label":["z"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"10","2":"3","3":"4"},{"1":"1","2":"7","3":"9"},{"1":"6","2":"4","3":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
+<pre class="r"><code>reduced &lt;- reduce(list(df1, df2, df3), bind_rows)</code></pre>
 </div>
 
 
@@ -2880,7 +2912,7 @@ df3 &lt;- tibble(x = sample(1:10, size = 3, replace = TRUE),
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
