@@ -102,20 +102,20 @@ airquality %>%
 
 create_point_plot <- function(i){
   
-  airquality %>%
+  p <- airquality %>%
     ggplot(aes(x = .data[[names(airquality)[1]]], y = .data[[names(airquality)[i]]]))+
     geom_point() +
     labs(title = glue("Relationship between Ozone and {names(airquality)[i]}"),
          y = glue("{names(airquality)[i]}"))
-  
+  print(p)
 }
 
 ```
 
-- The final step is to put the function in `map()`.
+- The final step is to put the function in `walk()`.
 
 ```{r, message = F, warning = F}
 
-map(2:ncol(airquality), create_point_plot)
+walk(2:ncol(airquality), create_point_plot)
 
 ```
