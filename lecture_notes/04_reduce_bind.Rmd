@@ -1,8 +1,7 @@
 ---
 title: "Automate Binding"
 subtitle: ""
-author: "Jae Yeon Kim"
-date: "`r Sys.Date()`"
+author: "D-Lab"
 output:
   html_document:
     df_print: paged

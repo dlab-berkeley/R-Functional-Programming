@@ -1,8 +1,6 @@
 ---
 title: "Why Functional Programming: No More Copying and Pasting"
-subtitle: ""
-author: "Jae Yeon Kim"
-date: "`r Sys.Date()`"
+author: "D-Lab"
 output:
   html_document:
     df_print: paged
@@ -106,7 +104,7 @@ df$d <- fix_missing(df$d)
 
 ```{r}
 
-purrr::map_df(df[,column], fix_missing)
+purrr::map_df(df, fix_missing)
 
 ```
 
