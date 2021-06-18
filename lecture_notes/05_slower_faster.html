@@ -278,8 +278,7 @@ if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)</code></p
 <li><p><code>walk()</code> works same as <code>map()</code> but doesn’t store its output.</p></li>
 <li><p>If you’re web scraping, one problem with this approach is it’s too fast by human standards.</p></li>
 </ul>
-<pre class="r"><code># 0.03 sec elapsed 
-tic()
+<pre class="r"><code>tic()
 walk(1:50, function(x){message(&quot;Scraping page&quot;, x)}) # Anonymous function; I don&#39;t name the function </code></pre>
 <pre><code>## Scraping page1</code></pre>
 <pre><code>## Scraping page2</code></pre>
@@ -332,7 +331,7 @@ walk(1:50, function(x){message(&quot;Scraping page&quot;, x)}) # Anonymous funct
 <pre><code>## Scraping page49</code></pre>
 <pre><code>## Scraping page50</code></pre>
 <pre class="r"><code>toc()</code></pre>
-<pre><code>## 0.006 sec elapsed</code></pre>
+<pre><code>## 0.008 sec elapsed</code></pre>
 <ul>
 <li>If you want to make the function run slowly …</li>
 </ul>
@@ -365,16 +364,14 @@ n_cores # This number depends on your computer spec.</code></pre>
 ## because it is considered unstable. For more details, how to control forked
 ## processing or not, and how to silence this warning in future R sessions, see ?
 ## parallelly::supportsMulticore</code></pre>
-<pre class="r"><code># 4.931 sec elapsed 
-tic()
+<pre class="r"><code>tic()
 mean100 &lt;- map(1:100000, mean)
 toc()</code></pre>
-<pre><code>## 0.347 sec elapsed</code></pre>
-<pre class="r"><code># 2.536 sec elapsed 
-tic()
+<pre><code>## 0.34 sec elapsed</code></pre>
+<pre class="r"><code>tic()
 mean100 &lt;- future_map(1:100000, mean)
 toc()</code></pre>
-<pre><code>## 0.488 sec elapsed</code></pre>
+<pre><code>## 0.467 sec elapsed</code></pre>
 </div>
 
 

@@ -62,8 +62,6 @@ walk(1:50, function(x){message("Scraping page", x)})
 - If you're web scraping, one problem with this approach is it's too fast by human standards.
 
 ```{r}
-
-# 0.03 sec elapsed 
 tic()
 walk(1:50, function(x){message("Scraping page", x)}) # Anonymous function; I don't name the function 
 toc()
@@ -77,10 +75,6 @@ toc()
 - If a function is a verb, then a helper function is an adverb (modifying the behavior of the verb). 
 
 ```{r,include=FALSE}
-
-# 49.05 sec elapsed
-
-
 tic()
 
 walk(1:50, slowly(function(x){message("Scraping page", x)},   
@@ -109,12 +103,10 @@ n_cores # This number depends on your computer spec.
 plan(multiprocess, # multicore, if supported, otherwise multisession
      workers = n_cores) # the maximum number of workers
 
-# 4.931 sec elapsed 
 tic()
 mean100 <- map(1:100000, mean)
 toc()
 
-# 2.536 sec elapsed 
 tic()
 mean100 <- future_map(1:100000, mean)
 toc()

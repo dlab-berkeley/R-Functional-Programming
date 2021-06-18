@@ -254,7 +254,6 @@ div.tocify {
 if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)</code></pre>
 <pre><code>## Loading required package: pacman</code></pre>
 <pre class="r"><code>pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc, # performance test 
                rvest) # web scraping </code></pre>
 </div>
 <div id="learning-objective" class="section level1" number="2">
@@ -276,7 +275,7 @@ if (!require(&quot;pacman&quot;)) install.packages(&quot;pacman&quot;)</code></p
 )</code></pre>
 <pre class="r"><code>map(url_lists, read_html)</code></pre>
 <ul>
-<li>This is a very simple problem so it’s easy to tell where the problem is. How can you make your error more informative?</li>
+<li>This is a toy example so it’s easy to tell where the problem is. How can you make your error more informative?</li>
 </ul>
 </div>
 <div id="solution" class="section level1" number="4">

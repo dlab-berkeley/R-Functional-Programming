@@ -18,7 +18,6 @@ output:
 # Install packages 
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc, # performance test 
                rvest) # web scraping 
 ```
 
@@ -50,7 +49,7 @@ map(url_lists, read_html)
 
 ```
 
-- This is a very simple problem so it's easy to tell where the problem is. How can you make your error more informative? 
+- This is a toy example so it's easy to tell where the problem is. How can you make your error more informative? 
 
 # Solution 
 

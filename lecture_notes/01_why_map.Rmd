@@ -13,7 +13,7 @@ output:
 
 # Setup
 
-```{r}
+```{r, message = F}
 # Install packages 
 if (!require("pacman")) install.packages("pacman")
 
@@ -135,7 +135,6 @@ data("airquality")
 ```
 
 ```{r}
-# 0.029 sec elapsed 
 tic()
 
 out1 <- vector("double", ncol(airquality)) # Placeholder 
@@ -151,8 +150,6 @@ toc()
 
 
 ```{r}
-# 0.011 sec elapsed 
-
 tic()
 
 out1 <- airquality %>% map_dbl(mean, na.rm = TRUE)

@@ -17,8 +17,7 @@ output:
 ```{r}
 # Install packages 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc) # performance test 
+pacman::p_load(tidyverse)
 ```
 
 # Objective 
