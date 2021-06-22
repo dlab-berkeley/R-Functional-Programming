@@ -1,8 +1,7 @@
 ---
 title: "Automate Plotting"
 subtitle: ""
-author: "Jae Yeon Kim"
-date: "`r Sys.Date()`"
+author: "D-Lab"
 output:
   html_document:
     df_print: paged
@@ -19,7 +18,6 @@ output:
 # Install packages 
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc, # performance test 
                glue) # glue strings and objects 
 ```
 
@@ -82,13 +80,13 @@ glue("{names} studies {fields}.")
 How can you create the character vector of column names? 
 
 **Challenge 2**
-How can make `ggplot2()` take strings as x and y variable names? (Hint: Type `?aes_string()`) 
+How can make `ggplot2()` take strings as x and y variable names?
 
-```{r}
+```{r, warning = F, message = F}
 
 airquality %>%
-    ggplot(aes_string(x = names(airquality)[1], y = names(airquality)[2])) +
-    geom_point() +
+      ggplot(aes(x = .data[[names(airquality)[1]]], y = .data[[names(airquality)[2]]]))+
+    geom_point()+
     labs(title = glue("Relationship between Ozone and {names(airquality)[2]}"),
          y = glue("{names(airquality)[2]}"))
 
@@ -102,20 +100,20 @@ airquality %>%
 
 create_point_plot <- function(i){
   
-  airquality %>%
-    ggplot(aes_string(x = names(airquality)[1], y = names(airquality)[i])) +
+  p <- airquality %>%
+    ggplot(aes(x = .data[[names(airquality)[1]]], y = .data[[names(airquality)[i]]]))+
     geom_point() +
     labs(title = glue("Relationship between Ozone and {names(airquality)[i]}"),
          y = glue("{names(airquality)[i]}"))
-  
+  print(p)
 }
 
 ```
 
-- The final step is to put the function in `map()`.
+- The final step is to put the function in `walk()`.
 
-```{r}
+```{r, message = F, warning = F}
 
-map(2:ncol(airquality), create_point_plot)
+walk(2:ncol(airquality), create_point_plot)
 
 ```

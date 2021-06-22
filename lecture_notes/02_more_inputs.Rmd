@@ -1,8 +1,7 @@
 ---
 title: "Automote 2 or 2+ Tasks"
 subtitle: ""
-author: "Jae Yeon Kim"
-date: "`r Sys.Date()`"
+author: "D-Lab"
 output:
   html_document:
     df_print: paged
@@ -18,8 +17,8 @@ output:
 ```{r}
 # Install packages 
 if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc) # performance test 
+pacman::p_load(tidyverse) # tidyverse pkgs including purrr
+
 ```
 
 # Objectives 
