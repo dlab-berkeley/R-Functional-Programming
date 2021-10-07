@@ -14,10 +14,8 @@ output:
 
 # Setup 
 
-```{r}
-# Install packages 
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse) # tidyverse pkgs including purrr
+```{r, message = F, warning = F}
+library(tidyverse)
 
 ```
 
@@ -133,3 +131,5 @@ pmap_output <- pmap(list(univ_list, dept_list), print_lists)
 ```
 
 **Challenge 3** Have you noticed that we used a slightly different input for `pmap()` compared to `map()` or `map2()`? What is the difference?
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

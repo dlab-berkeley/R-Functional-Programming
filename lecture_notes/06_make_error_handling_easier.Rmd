@@ -14,11 +14,9 @@ output:
 
 # Setup 
 
-```{r}
-# Install packages 
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               rvest) # web scraping 
+```{r, message = F, warning = F}
+library(tidyverse)
+library(rvest)
 ```
 
 # Learning objective 
@@ -124,3 +122,4 @@ url_lists[out[seq(out)] == "The URL is broken."]
 ```
 
 
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

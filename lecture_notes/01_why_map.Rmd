@@ -14,13 +14,10 @@ output:
 # Setup
 
 ```{r, message = F}
-# Install packages 
-if (!require("pacman")) install.packages("pacman")
-
-pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc, # performance test 
-               broom, # tidy modeling
-               patchwork) # arranging ggplots 
+library(tidyverse)
+library(tictoc)
+library(broom)
+library(patchwork)
 
 ```
 
@@ -273,3 +270,5 @@ y_means_tidy <- map_dbl(y_tidy, mean)
 (qplot(y_means_tidy) +
    geom_vline(xintercept = 500, linetype = "dotted", color = "red"))
 ```
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
