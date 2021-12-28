@@ -4,6 +4,8 @@
 
 This workshop helps you to step up your R skills with functional programming. The `purrr` package provides easy-to-use tools to automate repeated things in your entire R workflow (e.g., wrangling, modeling, and visualization). The end result is cleaner, faster, more readable and extendable code. 
 
+Prior experience with R at the level of [R Fundamentals](https://github.com/dlab-berkeley/R-Fundamentals) and [R Data Wrangling](https://github.com/dlab-berkeley/R-Data-Wrangling) is recommended.
+
 ## Install Instructions 
 
 We will use RStudio to go through the workshop materials, which requires installation of both the R language and the RStudio software. 
