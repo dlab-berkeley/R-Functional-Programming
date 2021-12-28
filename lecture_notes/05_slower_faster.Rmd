@@ -14,12 +14,10 @@ output:
 
 # Setup 
 
-```{r}
-# Install packages 
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               tictoc, # performance test 
-               furrr) # parallel processing 
+```{r, message = F, warning = F}
+library(tidyverse)
+library(tictoc)
+library(furrr)
 ```
 
 # Objectives 
@@ -113,3 +111,4 @@ toc()
 
 ```
 
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

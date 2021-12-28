@@ -14,10 +14,9 @@ output:
 
 # Setup 
 
-```{r}
-# Install packages 
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse)
+```{r, message = F, warning = F}
+library(tidyverse)
+
 ```
 
 # Objective 
@@ -72,4 +71,4 @@ reduced <- reduce(list(df1, df2, df3), bind_rows)
 
 ```
 
-
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>

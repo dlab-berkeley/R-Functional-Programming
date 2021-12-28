@@ -14,11 +14,9 @@ output:
 
 # Setup 
 
-```{r}
-# Install packages 
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, # tidyverse pkgs including purrr
-               glue) # glue strings and objects 
+```{r, message = F, warning = F}
+library(tidyverse)
+library(glue)
 ```
 
 # Objective 
@@ -117,3 +115,5 @@ create_point_plot <- function(i){
 walk(2:ncol(airquality), create_point_plot)
 
 ```
+
+<div class="tocify-extend-page" data-unique="tocify-extend-page" style="height: 0;"></div>
