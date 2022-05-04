@@ -7,3 +7,29 @@ editor: visual
 ## Motivation 
 
 ## Verbs
+
+## Maps 
+
+### Map with One List 
+
+### Map with Two Lists 
+
+### Map with Many Lists 
+
+### Map with Indices 
+
+## Functions 
+
+## Working with Lists 
+
+### Filtering 
+
+### Indexing
+
+### Reshaping
+
+### Modifying 
+
+### Combining 
+
+## Reduce 
