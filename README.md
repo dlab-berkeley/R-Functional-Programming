@@ -1,36 +1,77 @@
-# R-Functional-Programming
+# Functional Programming with R  
 
-## Workshop Description 
+Functional programming is a core attribute of R programming. R provides many tools for creating and manipulating functions to accomplish tasks. The functional programming paradigm is also suitable for data science and academic research because code is organized into functions to perform needed operations, which makes the steps easier to understand, extend, and document. 
 
-This workshop helps you to step up your R skills with functional programming. The `purrr` package provides easy-to-use tools to automate repeated things in your entire R workflow (e.g., wrangling, modeling, and visualization). The end result is cleaner, faster, more readable and extendable code. I highly recommend you to take this workshop (1) if you still write copy-and-paste code, (2) exclusively rely on for loops for automation, and (3) want to know about the joy and power of R functional programming.
+Participants in this workshop will learn how to use functional programming concepts in base R and the `purrr` package to perform data wrangling, visualization, and modeling tasks. 
 
-## Learning objectives
+Prior experience with R is helpful. We recommend that students feel comfortable with the skills taught in R Fundamentals. 
 
-1. How to use `purrr` to automate workflow in a cleaner, faster, and more extendable way [[Notebook](https://rawcdn.githack.com/dlab-berkeley/R-functional-programming/1650e53a815d7c6e5449e035fd61a21b646b43d7/lecture_notes/01_why_map.html)]
+## Installation Instructions 
 
-2. How to use `map2()` and `pmap()` to avoid writing nested loops. [[Notebook](https://rawcdn.githack.com/dlab-berkeley/R-functional-programming/1650e53a815d7c6e5449e035fd61a21b646b43d7/lecture_notes/02_more_inputs.html)]
+We will use RStudio to go through the workshop materials, which requires installation of both the R language and the RStudio software. 
 
-3. How to use `map()` and `glue()` to automate creating multiple plots [[Notebook](https://rawcdn.githack.com/dlab-berkeley/R-functional-programming/1650e53a815d7c6e5449e035fd61a21b646b43d7/lecture_notes/03_map_glue.html)]
+1. [Download R](https://www.r-project.org/): Follow the links according to the operating system that you are running. Download the package, and install R onto your compute. You should install the most recent version (at least version 4.0).
 
-4. How to use `reduce()` to automate joining multiple dataframes [[Notebook](https://rawcdn.githack.com/dlab-berkeley/R-functional-programming/1650e53a815d7c6e5449e035fd61a21b646b43d7/lecture_notes/04_reduce_join.html)]
+2. [Download RStudio](https://www.rstudio.com/products/rstudio/download/): Install RStudio Desktop. This should be free. Do this after you have already installed R. The D-Lab strongly recommends an RStudio edition of 2022.02.0+443 "Prairie Trillium" or higher.
 
-5. How to use `slowly()` and `future_` to make automation process either slower or faster [[Notebook](https://rawcdn.githack.com/dlab-berkeley/R-functional-programming/1650e53a815d7c6e5449e035fd61a21b646b43d7/lecture_notes/05_slower_faster.html)]
+3. Download these workshop materials:
 
-6. How to use `safely()` and `possibly()` to make error handling easier [[Notebook](https://rawcdn.githack.com/dlab-berkeley/R-functional-programming/1650e53a815d7c6e5449e035fd61a21b646b43d7/lecture_notes/06_make_error_handling_easier.html)]
+    - Click the green "Code" button in the top right of the repository information.
 
-## Prerequisites
+    - Click "Download Zip".
 
-- Some experience with writing functions in R
+    - Extract this file to a folder on your computer where you can easily access it (we recommend Desktop).
 
-## Setup
+4. Optional: If you are familiar with `git`, you can instead clone this repository by opening a terminal and entering 
 
-Launch the [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/dlab-berkeley/R-functional-programming/master?urlpath=rstudio). Please do so before attending the worskshop as it would take a while (especially, if you do it for the first time).
+5. Make sure that the following packages are installed on your computer 
 
----
+```
+fs
+here
+tibble
+tidyverse
+```
 
-### Contributions to these materials by: 
+## Run the Code 
 
-- [Jae Yeon Kim](https://jaeyk.github.io)
-- [Alex Stephenson](https://alexstephenson.me)
+Now that you have all the required software and materials, you need to run the code: 
 
-![](https://i.creativecommons.org/l/by/4.0/88x31.png) This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
+1. Launch the RStudio software.
+
+2. Use the file navigator to find the `R-Data-Wrangling` folder that you downloaded. 
+
+3. Open the `R-Functional-Programming.Rproj` by double clicking to open the code in an R project. 
+
+4. Open up the file corresponding to the part of the workshop currently in focus. 
+
+5. Place your cursor on a given line and press "Command + Enter" (Mac) or "Control + Enter" (PC) to run an individual line of code. 
+
+6. The `solutions` folder contains the solutions to the challenge problems. 
+
+## Is R not working on your laptop?
+
+If you do not have R installed and the materials loaded for your workshop by the time it starts, we *strongly* recommend using the UC Berkeley DataHub to run the materials. You can access the DataHub by clicking [![Datauhb](https://img.shields.io/badge/launch-datahub-blue)](https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fdlab-berkeley%2FR-Data-Wrangling&urlpath=rstudio%2F&branch=main)
+
+The DataHub downloads this repository, along with any necessary packages, and allows you to run the materials in an RStudio instance on UC Berkeley's servers. No installation is necessary from your end--you only need an internet browser and a CalNet ID to log in. By using the DataHub, you can save your work and come back to it at any time. When you want to return to your saved work, go straight to [DataHub](https://datahub.berkeley.edu/), sign in, and click on the `advanced-data-wrangling-in-R` folder. 
+
+## About the UC Berkeley D-Lab
+
+D-Lab works with Berkeley faculty, research staff, and students to advance data-intensive social science and humanities research. Our goal at D-Lab is to provide practical training, staff support, resources, and space to enable you to use R for your own research applications. Our services cater to all skill levels and no programming, statistical, or computer science backgrounds are necessary. We offer these services in the form of workshops, one-to-one consulting, and working groups that cover a variety of research topics, digital tools, and programming languages.  
+
+Visit the [D-Lab homepage](https://dlab.berkeley.edu/) to learn more about us. You can view our [calendar](https://dlab.berkeley.edu/events/calendar) for upcoming events, learn about how to utilize our [consulting](https://dlab.berkeley.edu/consulting) and [data](https://dlab.berkeley.edu/data) services, and check out upcoming [workshops](https://dlab.berkeley.edu/events/workshops).
+
+## Other D-Lab R Workshops 
+
+Here are other R workshops offered by the D-Lab:
+
+- [R Fundamentals](https://github.com/dlab-berkeley/R-Fundamentals)
+- [R Data Wrangling](https://github.com/dlab-berkeley/R-Data-Wrangling)
+- [R Data Visualization](https://github.com/dlab-berkeley/R-graphics)
+- [R Geospatial Fundamentals](https://github.com/dlab-berkeley/Geospatial-Fundamentals-in-R-with-sf)
+- [Census Data in R](https://github.com/dlab-berkeley/Census-Data-in-R)
+- [R Machine Learning](https://github.com/dlab-berkeley/Machine-Learning-in-R)
+
+## Contributors 
+
+- [Alex Stephenson](https://github.com/asteves)
